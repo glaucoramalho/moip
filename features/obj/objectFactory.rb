@@ -30,12 +30,8 @@ class ObjectFactory
   end
 
   def createCustomer(customer)
-    @customer =  Customer.new(customer['ownId'],customer['fullname'],customer['email'],customer['birthDate'],customer['shippingAddress'],customer['phone'],customer['taxDocument'],customer['fundingInstrument'])
+    @customer =  Customer.new(customer['ownId'],customer['fullname'],customer['email'],customer['birthDate'],customer['shippingAddress'],customer['phone'],customer['taxDocument'],customer['fundingInstruments'])
     return @customer
-  end
-
-  def createItem(product,detail,price)
-    return Item.new(product,detail,price)
   end
 
   def createOrder(order)
@@ -60,21 +56,42 @@ class ObjectFactory
 
   def getOrdersList
     file = File.open("features/data/orders.json")
-    ordersList = Array.new 
+    @ordersList = Array.new 
     file.each do |order|
-      ordersList << createOrder(JSON.parse(order))
+      @ordersList << createOrder(JSON.parse(order))
     end
     file.close
-    return ordersList
+    return @ordersList
+  end
+
+  def getOrdersForNewCustomers
+    @ordersList ||= getOrdersList
+    newCustomersOrders = Array.new
+    @ordersList.each{|order|newCustomersOrders << order if order.customer['id'].nil?}
+    return newCustomersOrders 
+  end
+
+  def getOrdersForHoldInEscrow
+    @ordersList ||= getOrdersList
+    holdInEscrowOrders = Array.new
+    @ordersList.each{|order|holdInEscrowOrders << order if not order.holdInEscrow.nil?}
+    return holdInEscrowOrders
   end
 
   def getPaymentsList
     file = File.open("features/data/payments.json")
-    paymentsList = Array.new 
+    @paymentsList = Array.new 
     file.each do |payment|
-      paymentsList << createPayment(JSON.parse(payment))
+      @paymentsList << createPayment(JSON.parse(payment))
     end
     file.close
-    return paymentsList
+    return @paymentsList
+  end
+
+  def getBoletoPaymentsList
+    @paymentsList ||= getPaymentsList 
+    boletoLists = Array.new
+    @paymentsList.each{|payment|boletoLists << payment if payment.fundingInstruments['method'] == "BOLETO"}
+    return boletoLists
   end
 end

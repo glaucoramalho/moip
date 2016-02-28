@@ -17,12 +17,7 @@ Scenario: UC003PTS004TC001 - Check if is possible to create a payment using BOLE
   When sending the Request to endpoint using all required fields and method as BOLETO.
   Then the Payment using all required fields and method as BOLETO is created.
 
-Scenario: UC003PTS004TC002 - Check if is possible to create a payment using ONLINE_DEBT.
-  Given Create a New Payment using all required fields and method as ONLINE_DEBT.
-  When sending the Request to endpoint using all required fields and method as ONLINE_DEBT.
-  Then the Payment using all required fields and method as ONLINE_DEBT is created.
-
 Scenario: UC003NTS001TC001 - Check if is possible to create a payment without all required fields.
   Given Create a New Payment without using all required fields.
-  When sending the Request to endpoint without using all required fields.
-  Then the Payment without using all required fields is created.
+  When sending the Payment Request to endpoint without using all required fields.
+  Then the Payment without using all required fields is not created.

@@ -45,12 +45,6 @@ Scenario: UC001PTS002TC006 - Check if a customer can be createdd without a fundi
   Then User created without a fundingInstrument.
   
 
-Scenario: UC001PTS003TC001 - Check if customer is eligible to Protected Sell with all eligible fields filled in during creation.
-  Given Create a New Customer Request using all required and non-required fields.
-  When Send the Request to the endpoint using all required and non-required fields.
-  Then User created using all required and non-required fields.
-  
-
 Scenario: UC001NTS001TC001 - Check if customer can be createdd without required fields.
   Given Create a New Customer Request without required fields.
   When Send the Request to the endpoint without required fields.

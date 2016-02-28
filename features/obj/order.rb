@@ -1,8 +1,8 @@
 class Order
-  attr_reader :ownId
-  attr_reader :items
-  attr_reader :holdInEscrow
-  attr_reader :customer
+  attr_accessor :ownId
+  attr_accessor :items
+  attr_accessor :holdInEscrow
+  attr_accessor :customer
 
   def initialize(ownId,items,holdInEscrow,customer)
       @ownId = ownId
@@ -17,7 +17,7 @@ class Order
       "items" => @items, 
       "holdInEscrow" => @holdInEscrow,
       "customer" => @customer
-    }.delete_if{|k,v|v==""}
+    }.delete_if{|k,v|v.nil?}
     return h.to_json(*a)
   end
 end

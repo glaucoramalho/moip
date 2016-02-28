@@ -7,7 +7,7 @@ class Rest
     File.open('features/data/key'){|file|key = file.read}
     @headers = {
       :content_type => 'application/json',
-      :authorization => key
+      :authorization => 'Basic %s' % key
     }
   end
   
@@ -24,9 +24,9 @@ class Rest
   end
   
   def payOrder(order,payment)
-    url = 'https://sandbox.moip.com.br/v2/orders/%s/payments/' % order 
-    RestClient.post(url, payment.to_json, @headers){|response, request, result| response }
+    url = 'https://sandbox.moip.com.br/v2/orders/%s/payments/' % order
+    response = RestClient.post(url, payment.to_json, @headers){|response, request, result| response }
+    puts "URL: %s, Payment: %s, Reponse: %s" % [url,payment.to_json,response.to_str]
+    return response
   end
-
-
 end

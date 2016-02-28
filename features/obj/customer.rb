@@ -6,9 +6,9 @@ class Customer
     attr_accessor :shippingAddress
     attr_accessor :phone
     attr_accessor :taxDocument
-    attr_accessor :fundingInstrument
+    attr_accessor :fundingInstruments
 
-  def initialize(ownId,fullname,email,birthDate,shippingAddress,phone,taxDocument,fundingInstrument)
+  def initialize(ownId,fullname,email,birthDate,shippingAddress,phone,taxDocument,fundingInstruments)
     @ownId  = ownId 
     @fullname = fullname
     @email = email
@@ -16,7 +16,7 @@ class Customer
     @shippingAddress = shippingAddress
     @phone = phone
     @taxDocument = taxDocument
-    @fundingInstrument = fundingInstrument
+    @fundingInstruments = fundingInstruments
   end
 
   def to_json(*a)
@@ -28,8 +28,8 @@ class Customer
       "shippingAddress" => @shippingAddress,
       "phone" => @phone,
       "taxDocument" => @taxDocument,
-      "fundingInstrument" => @fundingInstrument
-    }.delete_if{|k,v|v==""}
+      "fundingInstruments" => @fundingInstruments
+    }.delete_if{|k,v|v.nil?}
     return h.to_json(*a)
   end
 end

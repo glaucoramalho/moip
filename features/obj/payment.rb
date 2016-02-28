@@ -1,17 +1,17 @@
 class Payment
-  attr_reader :installmentCount
-  attr_reader :fundingInstrument
+  attr_accessor :installmentCount
+  attr_accessor :fundingInstrument
   
   def initialize(installmentCount,fundingInstrument)
     @installmentCount = installmentCount
-    @fundingInstrument = fundingInstrument  
+    @fundingInstrument = fundingInstrument
   end
 
   def to_json(*a)
     h = {
       "installmentCount" => @installmentCount,
       "fundingInstrument" => @fundingInstrument
-    }.delete_if{|k,v|v==""}
+    }.delete_if{|k,v|v.nil?}
     return h.to_json(*a)
   end
 end
